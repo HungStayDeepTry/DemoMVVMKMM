@@ -1,5 +1,6 @@
 package com.example.demomvvmkmm
 
+import com.example.demomvvmkmm.FileManager
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
@@ -13,5 +14,4 @@ val sharedModule = module {
         MyRepositoryImpl(get())
     }.bind<MyRepository>()
     viewModelOf(::MyViewModel)
-    singleOf(::FileManager)
 }
