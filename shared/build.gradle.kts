@@ -53,6 +53,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.runtime) // Thêm dependency SQLDelight runtime
             implementation(libs.coroutines.extensions)
+            implementation(libs.kotlinx.coroutines.core)
 
             //
             api(libs.koin.core)
@@ -68,6 +69,12 @@ kotlin {
             implementation(libs.android.driver)
             implementation(libs.koin.androidx.compose)
             implementation(libs.androidx.work.runtime.ktx)
+            implementation (libs.androidx.localbroadcastmanager.v100)
+        }
+        getByName("commonMain") {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+            }
         }
     }
 }
@@ -82,4 +89,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+}
+dependencies {
+    implementation(libs.androidx.room.ktx)
 }

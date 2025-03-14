@@ -1,0 +1,9 @@
+<paths>
+    <external-path name="external_files" path = "." />
+    <!-- Đường dẫn đến tệp trong bộ nhớ trong của ứng dụng (filesDir) -->
+    <files-path name="internal_files" path = "." />
+
+    <!-- Đường dẫn đến thư mục cache của ứng dụng -->
+    <cache-path name="cache_files" path = "." />
+
+</paths>
