@@ -44,4 +44,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.androidx.localbroadcastmanager)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.compose.viewmodel)
 }

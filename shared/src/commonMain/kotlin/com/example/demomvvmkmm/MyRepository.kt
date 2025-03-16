@@ -1,8 +1,16 @@
 package com.example.demomvvmkmm
 
+import androidx.compose.ui.text.input.KeyboardType.Companion.Uri
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 interface MyRepository {
@@ -11,6 +19,8 @@ interface MyRepository {
 class MyRepositoryImpl(
     private val fileManager: FileManager
 ): MyRepository {
+    private val _fileUriFlow = MutableSharedFlow<String?>(replay = 1)  // 🔹 StateFlow để ViewModel quan sát
+    val fileUriFlow = _fileUriFlow.asSharedFlow()
     init{
         observeFileUriEvent()
     }
@@ -23,7 +33,7 @@ class MyRepositoryImpl(
     override fun helloWorld(): String {
         return "Hola"
     }
-    fun shareFile(){
+    suspend fun shareFile(){
         fileManager.shareFile()
     }
     private fun observeFileUriEvent() {
@@ -39,8 +49,18 @@ class MyRepositoryImpl(
 //                    // Có thể gửi URI này vào UI hoặc ViewModel
 //                }
 //            }
+            fileManager.filePathEvent.collectLatest { uriString ->
+                rsRepoShareState()
+                uriString?.let {
+                    if (!uriString.isNullOrEmpty()) { // 🔥 Kiểm tra tránh null
+                        _fileUriFlow.emit(uriString)
+                    }
+                }
+            }
         }
     }
-
+    suspend fun rsRepoShareState(){
+        _fileUriFlow.emit(null)
+    }
 }
 data class User(val name: String, val age: Int)

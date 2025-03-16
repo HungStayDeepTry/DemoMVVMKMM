@@ -70,6 +70,8 @@ kotlin {
             implementation(libs.koin.androidx.compose)
             implementation(libs.androidx.work.runtime.ktx)
             implementation (libs.androidx.localbroadcastmanager.v100)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         getByName("commonMain") {
             dependencies {
